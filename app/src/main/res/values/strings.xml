@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">QLNhaHang</string>
+    <string name="brand_name">:re Coffee Shop </string>
+    <string name="Name_Res">Nhà Hàng Đà Nẵng</string>
+    <string name="slogan">Thơm ngon đến từng giọt cuối cùng</string>
+    <string name="login">Đăng nhập</string>
+    <string name="logintittle">Đăng <br /> nhập</string>
+    <string name="register">Đăng ký</string>
+    <string name="function">Quản lý</string>
+    <string name="howwork">Hướng dẫn sử dụng</string>
+    <string name="create_acc">Tạo <br /> tài khoản</string>
+    <string name="enter_fullname">Họ và tên</string>
+    <string name="enter_username">Tên tài khoản</string>
+    <string name="enter_email">Email</string>
+    <string name="enter_phone">Số điện thoại</string>
+    <string name="enter_password">Mật khẩu</string>
+    <string name="btn_next">Tiếp theo</string>
+    <string name="btn_complete">Hoàn thành</string>
+    <string name="add_sucessful">Thêm thành công!</string>
+    <string name="add_failed">Thêm thất bại!</string>
+    <string name="edit_sucessful">Sửa thành công!</string>
+    <string name="edit_failed">Lỗi khi sửa!</string>
+    <string name="delete_sucessful">Xóa thành công!</string>
+    <string name="delete_failed">Lỗi khi xóa!</string>
+    <string name="not_empty">Không được để trống!</string>
+    <string name="opentoggle">Mở</string>
+    <string name="closetoggle">Đóng</string>
+    <string name="addTable">Thêm bàn ăn</string>
+    <string name="tablename">Tên bàn ăn</string>
+    <string name="addMenu">Thêm thực đơn</string>
+    <string name="addmenu">Thêm <br /> thực đơn</string>
+    <string name="addCategory">Thêm loại</string>
+    <string name="addcategory">Thêm <br /> loại</string>
+    <string name="editcategory">Sửa <br /> loại</string>
+    <string name="choseimg">Chọn hình</string>
+</resources>
