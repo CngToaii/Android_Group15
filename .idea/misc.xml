@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/drawable-v24/border.xml" value="0.121" />
+        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/drawable-v24/ic_baseline_backspace_24.xml" value="0.2555" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/font/muli.xml" value="0.28020833333333334" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/font/muli_black.xml" value="0.28020833333333334" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/activity_bill_view.xml" value="0.23550724637681159" />
@@ -21,10 +22,12 @@
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/addstaff_layout.xml" value="0.264" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/custom_displaystaff_layout.xml" value="0.23550724637681159" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/custom_displaystatistic_layout.xml" value="0.16458333333333333" />
+        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/custom_displaytable_layout.xml" value="0.264" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/custom_layout_displaystaff.xml" value="0.25" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/custom_layout_displaystatistic.xml" value="0.25" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/custom_layout_displaytable.xml" value="0.16458333333333333" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/custom_layout_paymentmenu.xml" value="0.23550724637681159" />
+        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/custom_paymentmenu_layout.xml" value="0.2" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/detailstatistic_layout.xml" value="0.25" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/displaycategory_layout.xml" value="0.25" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/displayhome_layout.xml" value="0.25" />

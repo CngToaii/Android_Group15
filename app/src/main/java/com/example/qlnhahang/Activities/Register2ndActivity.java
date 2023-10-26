@@ -1,8 +1,6 @@
 package com.example.qlnhahang.Activities;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,13 +16,6 @@ public class Register2ndActivity extends AppCompatActivity {
     }
 
 
-
-    //Hàm quay về màn hình trước
-    public void backFromRegister2nd(View view){
-        Intent intent = new Intent(getApplicationContext(),RegisterActivity.class);
-        startActivity(intent);
-        finish();
-    }
 
 
 }
