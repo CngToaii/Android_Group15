@@ -1,5 +1,6 @@
 package com.example.qlnhahang.DAO;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -55,6 +56,7 @@ public class LoaiMonDAO {
         }
     }
 
+    @SuppressLint("Range")
     public List<LoaiMonDTO> LayDSLoaiMon(){
         List<LoaiMonDTO> loaiMonDTOList = new ArrayList<LoaiMonDTO>();
         String query = "SELECT * FROM " +CreateDatabase.TBL_LOAIMON;
@@ -72,6 +74,7 @@ public class LoaiMonDAO {
         return loaiMonDTOList;
     }
 
+    @SuppressLint("Range")
     public LoaiMonDTO LayLoaiMonTheoMa(int maloai){
         LoaiMonDTO loaiMonDTO = new LoaiMonDTO();
         String query = "SELECT * FROM " +CreateDatabase.TBL_LOAIMON+" WHERE "+CreateDatabase.TBL_LOAIMON_MALOAI+" = "+maloai;

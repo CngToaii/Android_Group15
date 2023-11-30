@@ -1,5 +1,6 @@
 package com.example.qlnhahang.DAO;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -22,6 +23,7 @@ public class QuyenDAO {
     }
     
 
+    @SuppressLint("Range")
     public String LayTenQuyenTheoMa(int maquyen){
         String tenquyen ="";
         String query = "SELECT * FROM "+CreateDatabase.TBL_QUYEN+" WHERE "+CreateDatabase.TBL_QUYEN_MAQUYEN+" = "+maquyen;

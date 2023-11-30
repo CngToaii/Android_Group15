@@ -1,5 +1,6 @@
 package com.example.qlnhahang.DAO;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -32,6 +33,7 @@ public class DonDatDAO {
         return madondat;
     }
 
+    @SuppressLint("Range")
     public List<DonDatDTO> LayDSDonDat(){
         List<DonDatDTO> donDatDTOS = new ArrayList<DonDatDTO>();
         String query = "SELECT * FROM "+CreateDatabase.TBL_DONDAT;
@@ -52,6 +54,7 @@ public class DonDatDAO {
         return donDatDTOS;
     }
 
+    @SuppressLint("Range")
     public List<DonDatDTO> LayDSDonDatNgay(String ngaythang){
         List<DonDatDTO> donDatDTOS = new ArrayList<DonDatDTO>();
         String query = "SELECT * FROM "+CreateDatabase.TBL_DONDAT+" WHERE "+CreateDatabase.TBL_DONDAT_NGAYDAT+" like '"+ngaythang+"'";
@@ -72,6 +75,7 @@ public class DonDatDAO {
         return donDatDTOS;
     }
 
+    @SuppressLint("Range")
     public long LayMaDonTheoMaBan(int maban, String tinhtrang){
         String query = "SELECT * FROM " +CreateDatabase.TBL_DONDAT+ " WHERE " +CreateDatabase.TBL_DONDAT_MABAN+ " = '" +maban+ "' AND "
                 +CreateDatabase.TBL_DONDAT_TINHTRANG+ " = '" +tinhtrang+ "' ";

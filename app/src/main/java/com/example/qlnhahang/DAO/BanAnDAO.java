@@ -1,5 +1,6 @@
 package com.example.qlnhahang.DAO;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -56,6 +57,7 @@ public class BanAnDAO {
     }
 
     //Hàm lấy ds các bàn ăn đổ vào gridview
+    @SuppressLint("Range")
     public List<BanAnDTO> LayTatCaBanAn(){
         List<BanAnDTO> banAnDTOList = new ArrayList<BanAnDTO>();
         String query = "SELECT * FROM " +CreateDatabase.TBL_BAN;
@@ -72,6 +74,7 @@ public class BanAnDAO {
         return banAnDTOList;
     }
 
+    @SuppressLint("Range")
     public String LayTinhTrangBanTheoMa(int maban){
         String tinhtrang="";
         String query = "SELECT * FROM "+CreateDatabase.TBL_BAN + " WHERE " +CreateDatabase.TBL_BAN_MABAN+ " = '" +maban+ "' ";
@@ -97,6 +100,7 @@ public class BanAnDAO {
         }
     }
 
+    @SuppressLint("Range")
     public String LayTenBanTheoMa(int maban){
         String tenban="";
         String query = "SELECT * FROM "+CreateDatabase.TBL_BAN + " WHERE " +CreateDatabase.TBL_BAN_MABAN+ " = '" +maban+ "' ";
