@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/img_custommenu_HinhMon"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/cafe_americano"
+            android:scaleType="fitXY"
+            />
+        <TextView
+            android:id="@+id/txt_custommenu_TenMon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:fontFamily="@font/muli_black"
+            android:background="@color/black50"
+            android:text="Caffè Americano Iced"
+            android:layout_gravity="bottom"
+            android:textSize="20sp"
+            android:padding="5dp"/>
+
+        <TextView
+            android:id="@+id/txt_custommenu_TinhTrang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="Còn món"
+            android:textSize="12dp"
+            android:textColor="@color/white"
+            android:background="@drawable/round_corner_textview"
+            android:layout_gravity="top|right"
+            android:layout_margin="5dp"
+            />
+    </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/img_custommenu_HinhMon"
+        android:background="@color/colorPrimary"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        >
+        <TextView
+            android:id="@+id/txt_custommenu_GiaTien"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10000 VND"
+            android:fontFamily="@font/muli"
+            android:textStyle="bold"
+            android:padding="3dp"
+            android:layout_centerInParent="true"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            />
+
+    </RelativeLayout>
+
+</LinearLayout>

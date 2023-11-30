@@ -33,7 +33,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/muli_black"
-        android:text="@string/Name_Res"
+        android:text="Nhà Hàng Miền Tây"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="32sp" />
@@ -81,5 +81,14 @@
 
     </LinearLayout>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:text="@string/howwork"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/white"
+        style="@style/Widget.AppCompat.Button.Borderless"/>
 
 </LinearLayout>

@@ -1,6 +1,9 @@
 package com.example.qlnhahang.Activities;
 
-import static com.example.qlnhahang.R.*;
+import static com.example.qlnhahang.R.anim;
+import static com.example.qlnhahang.R.id;
+import static com.example.qlnhahang.R.layout;
+import static com.example.qlnhahang.R.string;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -184,4 +187,5 @@ public class RegisterActivity extends AppCompatActivity {
             return true;
         }
     }
+    //endregion
 }

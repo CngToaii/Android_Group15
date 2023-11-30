@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:title="Trang chủ"
+            android:icon="@drawable/ic_baseline_home_24"/>
+
+        <item
+            android:id="@+id/nav_statistic"
+            android:title="Thống kê"
+            android:icon="@drawable/ic_baseline_bar_chart_24"/>
+
+        <item android:title="Quản lý">
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/nav_table"
+                        android:title="Bàn ăn"
+                        android:icon="@drawable/ic_baseline_airline_seat_legroom_normal_24"/>
+                    <item
+                        android:id="@+id/nav_category"
+                        android:title="Thực đơn"
+                        android:icon="@drawable/ic_baseline_restaurant_menu_24"/>
+
+                    <item
+                        android:id="@+id/nav_staff"
+                        android:title="Nhân viên"
+                        android:icon="@drawable/ic_baseline_person_24"/>
+                </group>
+            </menu>
+        </item>
+
+        <item
+            android:id="@+id/nav_logout"
+            android:title="Đăng xuất"
+            android:icon="@drawable/ic_baseline_exit_to_app_24"/>
+
+    </group>
+</menu>

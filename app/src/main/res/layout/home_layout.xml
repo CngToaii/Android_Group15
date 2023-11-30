@@ -1,283 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView
+<androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightwhite"
-    >
+    tools:context=".Activities.HomeActivity"
+    tools:openDrawer="start"
+    android:id="@+id/drawer_layout"
+    ><!--tools:openDrawer="start" -->
+
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         >
-
-        <LinearLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="20dp"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
             >
 
-            <TextView
-                android:layout_gravity="center"
-                android:id="@+id/txt_welcom_XinChao"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="Nhà hàng Đà Nẵng"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textAllCaps="true"
-                android:layout_margin="10dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:paddingRight="10dp"
-                android:paddingLeft="10dp"
-                />
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal"
-                >
+        </androidx.appcompat.widget.Toolbar>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginRight="5dp"
-                    >
-                    <RelativeLayout
-                        android:id="@+id/layout_displayhome_ThongKe"
-                        android:layout_width="65dp"
-                        android:layout_height="65dp"
-                        android:elevation="8dp"
-                        android:layout_margin="10dp"
-                        android:background="@color/colorPrimary"
-                        >
-
-                        <ImageView
-                            android:layout_width="200dp"
-                            android:layout_height="200dp"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/tkk" />
-                    </RelativeLayout>
-
-                    <TextView
-                        android:layout_width="65dp"
-                        android:layout_height="33dp"
-                        android:layout_margin="10dp"
-                        android:gravity="center_horizontal"
-                        android:text="Thống kê doanh thu"
-                        android:textAlignment="center"
-                        android:textColor="@color/black" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginRight="5dp"
-                    >
-                    <RelativeLayout
-                        android:id="@+id/layout_displayhome_XemBan"
-                        android:layout_width="65dp"
-                        android:layout_height="65dp"
-                        android:elevation="8dp"
-                        android:layout_margin="10dp"
-                        android:background="@color/colorPrimary"
-                        >
-
-                        <ImageView
-                            android:layout_width="250dp"
-                            android:layout_height="200dp"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/an" />
-                    </RelativeLayout>
-                    <TextView
-                        android:layout_width="65dp"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:gravity="center_horizontal"
-                        android:text="Xem danh sách bàn"
-                        android:textColor="@color/black"
-                        android:layout_margin="10dp"
-                        />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginRight="5dp"
-                    >
-                    <RelativeLayout
-                        android:id="@+id/layout_displayhome_XemMenu"
-                        android:layout_width="65dp"
-                        android:layout_height="65dp"
-                        android:elevation="8dp"
-                        android:layout_margin="10dp"
-                        android:background="@color/colorPrimary"
-                        >
-
-                        <ImageView
-                            android:layout_width="200dp"
-                            android:layout_height="500dp"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/nu" />
-                    </RelativeLayout>
-                    <TextView
-                        android:layout_width="65dp"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:gravity="center_horizontal"
-                        android:text="Thêm Thực đơn"
-                        android:textColor="@color/black"
-                        android:layout_margin="10dp"
-                        />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginRight="5dp"
-                    >
-                    <RelativeLayout
-                        android:id="@+id/layout_displayhome_XemNV"
-                        android:layout_width="65dp"
-                        android:layout_height="65dp"
-                        android:elevation="8dp"
-                        android:layout_margin="10dp"
-                        android:background="@color/colorPrimary"
-                        >
-
-                        <ImageView
-                            android:layout_width="200dp"
-                            android:layout_height="200dp"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/us" />
-                    </RelativeLayout>
-                    <TextView
-                        android:layout_width="65dp"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:gravity="center_horizontal"
-                        android:text="Thông tin nhân viên"
-                        android:textColor="@color/black"
-                        android:layout_margin="10dp"
-                        />
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:background="@color/grey"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            />
-
-        <LinearLayout
+        <FrameLayout
+            android:id="@+id/contentView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp"
+            android:layout_height="match_parent"
             >
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:fontFamily="@font/muli_black"
-                    android:text="Menu Nhà Hàng"
-                    android:textAllCaps="true"
-                    android:textColor="@color/black"
-                    android:textSize="20sp" />
-                <TextView
-                    android:id="@+id/txt_displayhome_ViewAllCategory"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Xem tất cả >"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    />
-
-            </RelativeLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcv_displayhome_LoaiMon"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:clipToPadding="false"
-                />
-
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:background="@color/grey"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp"
-            >
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:fontFamily="@font/muli_black"
-                    android:text="Thanh Toán Hôm Nay"
-                    android:textAllCaps="true"
-                    android:textColor="@color/black"
-                    android:textSize="20sp" />
-                <TextView
-                    android:id="@+id/txt_displayhome_ViewAllStatistic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Xem tất cả >"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    />
-
-            </RelativeLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcv_displayhome_DonTrongNgay"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:clipToPadding="false"
-                />
-
-        </LinearLayout>
+        </FrameLayout>
 
     </LinearLayout>
 
-</ScrollView>
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_view_trangchu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/lightwhite"
+        android:theme="@style/navigationTheme"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/menu_navigation_header"
+        app:menu="@menu/main_menu_navigation"/>
 
+
+
+</androidx.drawerlayout.widget.DrawerLayout>

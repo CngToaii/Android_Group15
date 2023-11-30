@@ -17,12 +17,17 @@
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/activity_main.xml" value="0.152" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/activity_menu.xml" value="0.16458333333333333" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/activity_payment_menu.xml" value="0.16458333333333333" />
+        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/activity_static_thong_ke.xml" value="0.10989583333333333" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/addcategory_layout.xml" value="0.25" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/addmenu_layout.xml" value="0.25" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/addstaff_layout.xml" value="0.264" />
+        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/addtable_layout.xml" value="0.14221014492753623" />
+        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/amount_menu_layout.xml" value="0.14221014492753623" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/custom_displaystaff_layout.xml" value="0.23550724637681159" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/custom_displaystatistic_layout.xml" value="0.16458333333333333" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/custom_displaytable_layout.xml" value="0.264" />
+        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/custom_layout_displaycategory.xml" value="0.14221014492753623" />
+        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/custom_layout_displaymenu.xml" value="0.14221014492753623" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/custom_layout_displaystaff.xml" value="0.25" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/custom_layout_displaystatistic.xml" value="0.25" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/custom_layout_displaytable.xml" value="0.16458333333333333" />
@@ -32,11 +37,16 @@
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/displaycategory_layout.xml" value="0.25" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/displayhome_layout.xml" value="0.25" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/displaymenu_layout.xml" value="0.25" />
+        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/displaystaff_layout.xml" value="0.14221014492753623" />
+        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/displaystatistic_layout.xml" value="0.14221014492753623" />
+        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/displaytable_layout.xml" value="0.14221014492753623" />
+        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/edittable_layout.xml" value="0.14221014492753623" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/home_layout.xml" value="0.264" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/home_layout2.xml" value="0.10989583333333333" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/login_layout.xml" value="0.25" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/menu_layout.xml" value="0.2" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/menu_navigation_header.xml" value="0.264" />
+        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/payment_layout.xml" value="0.14221014492753623" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/register2nd_layout.xml" value="0.25" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/register_layout.xml" value="0.264" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/QLNhaHang/app/src/main/res/layout/splash_layout.xml" value="0.1" />

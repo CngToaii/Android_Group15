@@ -43,7 +43,7 @@
             android:layout_marginBottom="15dp"
             android:scaleType="fitXY"
             android:src="@drawable/drinkfood" />
-        
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtl_addmenu_TenMon"
             android:layout_width="match_parent"
@@ -173,13 +173,13 @@
 
 </LinearLayout>
 
-<!--<Spinner-->
-<!--android:id="@+id/spn_addmenu_themloai"-->
-<!--android:layout_width="wrap_content"-->
-<!--android:layout_height="wrap_content"-->
-<!--android:layout_alignParentLeft="true"-->
-<!--android:layout_toStartOf="@id/btnimg_addmenu_nutthemloai"-->
-<!--android:layout_toLeftOf="@id/btnimg_addmenu_nutthemloai"-->
-<!--android:layout_centerInParent="true"-->
-<!--    >-->
-<!--</Spinner>-->
+    <!--<Spinner-->
+    <!--android:id="@+id/spn_addmenu_themloai"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:layout_toStartOf="@id/btnimg_addmenu_nutthemloai"-->
+    <!--android:layout_toLeftOf="@id/btnimg_addmenu_nutthemloai"-->
+    <!--android:layout_centerInParent="true"-->
+    <!--    >-->
+    <!--</Spinner>-->
