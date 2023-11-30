@@ -10,20 +10,19 @@
         android:id="@+id/txt_customtable_TenBanAn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ban 1"
         android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:layout_centerHorizontal="true"
         />
-
     <ImageView
         android:id="@+id/img_customtable_BanAn"
         android:layout_width="140dp"
         android:layout_height="120dp"
+        android:src="@drawable/ic_baseline_event_seat_40"
         android:layout_below="@+id/txt_customtable_TenBanAn"
         android:background="@color/colorPrimary"
-        android:src="@drawable/ic_baseline_event_seat_40" />
+        />
 
     <ImageView
         android:id="@+id/img_customtable_GoiMon"
