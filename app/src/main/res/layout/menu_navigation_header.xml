@@ -29,7 +29,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="20dp"
         android:layout_marginBottom="15dp"
-        android:text="Nhà Hàng Miền Tây"
+        android:text="Nhà Hàng Quê Hương"
         android:textColor="@color/black"
         android:textSize="28sp"
         android:textStyle="bold" />
