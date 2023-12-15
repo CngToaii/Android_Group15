@@ -16,7 +16,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.QLNhaHang">
-        <activity android:name=".Activities.BillView"></activity>
+
+        <activity
+            android:name=".Activityprofile"
+            android:exported="false" />
+
         <activity android:name=".Activities.StaticThongKe" />
         <activity android:name=".Activities.DetailStatisticActivity" />
         <activity android:name=".Activities.AddStaffActivity" />
