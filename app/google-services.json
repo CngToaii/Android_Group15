@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "676044253188",
+    "firebase_url": "https://quanly-397fa-default-rtdb.firebaseio.com",
+    "project_id": "quanly-397fa",
+    "storage_bucket": "quanly-397fa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:676044253188:android:c0152783ff3becd7dfad51",
+        "android_client_info": {
+          "package_name": "com.example.qlnhahang"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5WhvoxpBvRxSzj-SqFzeCM7Ucox67N-Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

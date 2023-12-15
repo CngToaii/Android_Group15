@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.AddMenuActivity"
+    android:orientation="vertical"
+    android:padding="30dp"
+    android:background="@color/colorPrimary"
+    >
+
+    <LinearLayout
+        android:id="@+id/layout_add"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#ff7f50"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/img_addmenu_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_back_black_24dp" />
+
+        <TextView
+            android:id="@+id/txt_addmenu_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="Thêm sản phẩm"
+            android:textAllCaps="true"
+
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/btn_refresh"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="100dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_refresh_black_24dp" />
+
+        <Button
+            android:id="@+id/btn_addmenu_ThemMon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:text="OK"
+            android:textAllCaps="true"
+            android:textSize="30dp"
+            android:background="@drawable/matcha" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        >
+
+        <ImageView
+            android:id="@+id/img_addmenu_ThemHinh"
+            android:layout_width="332dp"
+            android:layout_height="300dp"
+            android:layout_marginBottom="15dp"
+            android:src="@drawable/iconf" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtl_addmenu_TenMon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tên món"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:startIconTint="@color/black"
+            app:hintTextColor="@color/black"
+            android:textColorHint="@color/black"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/black"
+            app:boxStrokeWidthFocused="2dp"
+            app:boxStrokeColor="@color/black"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="text"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtl_addmenu_GiaTien"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Giá tiền"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:startIconTint="@color/black"
+            app:hintTextColor="@color/black"
+            android:textColorHint="@color/black"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/black"
+            app:boxStrokeWidthFocused="2dp"
+            app:boxStrokeColor="@color/black"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="number"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtl_addmenu_LoaiMon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Loại món"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:startIconTint="@color/black"
+                app:hintTextColor="@color/black"
+                android:textColorHint="@color/black"
+                app:boxStrokeWidthFocused="2dp"
+                app:boxStrokeColor="@color/black"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_trangthaimon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtl_addmenu_LoaiMon"
+                android:layout_marginTop="10dp"
+                >
+
+                <TextView
+                    android:id="@+id/txt_addmenu_TinhTrang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Trạng thái:"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:layout_centerVertical="true"
+                    />
+                <RadioGroup
+                    android:id="@+id/rg_addmenu_TinhTrang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:orientation="horizontal"
+                    android:layout_toRightOf="@id/txt_addmenu_TinhTrang"
+                    android:layout_marginLeft="10dp"
+                    >
+                    <RadioButton
+                        android:id="@+id/rd_addmenu_ConMon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Còn món"
+                        android:checked="true"
+                        />
+                    <RadioButton
+                        android:id="@+id/rd_addmenu_HetMon"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hết món"
+                        />
+                </RadioGroup>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
+
+<!--<Spinner-->
+<!--android:id="@+id/spn_addmenu_themloai"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_alignParentLeft="true"-->
+<!--android:layout_toStartOf="@id/btnimg_addmenu_nutthemloai"-->
+<!--android:layout_toLeftOf="@id/btnimg_addmenu_nutthemloai"-->
+<!--android:layout_centerInParent="true"-->
+<!--    >-->
+<!--</Spinner>-->

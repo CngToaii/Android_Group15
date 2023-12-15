@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.AddCategoryActivity"
+    android:orientation="vertical"
+    android:padding="30dp"
+    android:background="@color/colorPrimary"
+    >
+
+
+    <LinearLayout
+        android:id="@+id/layout_add"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/img_addcategory_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_back_black_24dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="Thêm sản phẩm"
+            android:textAllCaps="true"
+
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/btn_refresh"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="100dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_refresh_black_24dp" />
+
+        <Button
+            android:id="@+id/btn_addcategory_TaoLoai"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:text="OK"
+            android:textAllCaps="true"
+
+            android:background="@drawable/matcha" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="30dp"
+        >
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtl_addcategory_TenLoai"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="Tên menu"
+            app:hintTextColor="@color/black"
+            app:boxStrokeColor="@color/black"
+            app:boxStrokeWidthFocused="2dp"
+            app:startIconDrawable="@drawable/ic_baseline_airline_seat_legroom_normal_24"
+            app:endIconTint="@color/black"
+            app:endIconMode="clear_text"
+            android:textColorHint="@color/black"
+            app:startIconTint="@color/black"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/black"
+                android:fontFamily="@font/muli"
+                android:inputType="text"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/img_addcategory_ThemHinh"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="20dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/iconf" />
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
