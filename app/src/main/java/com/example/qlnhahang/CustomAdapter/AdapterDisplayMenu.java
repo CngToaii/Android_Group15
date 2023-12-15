@@ -73,8 +73,9 @@ public class AdapterDisplayMenu extends BaseAdapter {
 
         //lấy hình ảnh
         if(monDTO.getHinhAnh() != null){
-            byte[] menuimage = monDTO.getHinhAnh();
-            Bitmap bitmap = BitmapFactory.decodeByteArray(menuimage,0,menuimage.length);
+            String menuimage = monDTO.getHinhAnh();
+            byte[] menuimagebyte = android.util.Base64.decode(menuimage, android.util.Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(menuimagebyte,0,menuimagebyte.length);
             viewholder.img_custommenu_HinhMon.setImageBitmap(bitmap);
         }else {
             viewholder.img_custommenu_HinhMon.setImageResource(R.drawable.cafe_americano);

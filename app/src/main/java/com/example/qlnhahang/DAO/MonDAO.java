@@ -10,6 +10,7 @@ import com.example.qlnhahang.DTO.MonDTO;
 import com.example.qlnhahang.Database.CreateDatabase;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MonDAO {
@@ -71,7 +72,7 @@ public class MonDAO {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
             MonDTO monDTO = new MonDTO();
-            monDTO.setHinhAnh(cursor.getBlob(cursor.getColumnIndex(CreateDatabase.TBL_MON_HINHANH)));
+            monDTO.setHinhAnh(Arrays.toString(cursor.getBlob(cursor.getColumnIndex(CreateDatabase.TBL_MON_HINHANH))));
             monDTO.setTenMon(cursor.getString(cursor.getColumnIndex(CreateDatabase.TBL_MON_TENMON)));
             monDTO.setMaLoai(cursor.getInt(cursor.getColumnIndex(CreateDatabase.TBL_MON_MALOAI)));
             monDTO.setMaMon(cursor.getInt(cursor.getColumnIndex(CreateDatabase.TBL_MON_MAMON)));
@@ -91,7 +92,7 @@ public class MonDAO {
         Cursor cursor = database.rawQuery(query,null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
-            monDTO.setHinhAnh(cursor.getBlob(cursor.getColumnIndex(CreateDatabase.TBL_MON_HINHANH)));
+            monDTO.setHinhAnh(Arrays.toString(cursor.getBlob(cursor.getColumnIndex(CreateDatabase.TBL_MON_HINHANH))));
             monDTO.setTenMon(cursor.getString(cursor.getColumnIndex(CreateDatabase.TBL_MON_TENMON)));
             monDTO.setMaLoai(cursor.getInt(cursor.getColumnIndex(CreateDatabase.TBL_MON_MALOAI)));
             monDTO.setMaMon(cursor.getInt(cursor.getColumnIndex(CreateDatabase.TBL_MON_MAMON)));
@@ -104,3 +105,4 @@ public class MonDAO {
     }
 
 }
+

@@ -19,8 +19,16 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import com.example.qlnhahang.Activities.AddMenuActivity;
 import com.example.qlnhahang.Activities.AmountMenuActivity;
@@ -30,33 +38,32 @@ import com.example.qlnhahang.DAO.MonDAO;
 import com.example.qlnhahang.DTO.MonDTO;
 import com.example.qlnhahang.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DisplayMenuFragment extends Fragment {
 
-    int maloai, maban;
+    int maloai, maban, madon;
     String tenloai,tinhtrang;
     GridView gvDisplayMenu;
     MonDAO monDAO;
-    List<MonDTO> monDTOList;
+    List<MonDTO> monDTOList = new ArrayList<>();
     AdapterDisplayMenu adapterDisplayMenu;
 
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference myRef1 = database.getReference("Mon");
     ActivityResultLauncher<Intent> resultLauncherMenu = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if(result.getResultCode() == Activity.RESULT_OK){
                         Intent intent = result.getData();
-                        boolean ktra = intent.getBooleanExtra("ktra",false);
+                        boolean ktra = true;
                         String chucnang = intent.getStringExtra("chucnang");
                         if(chucnang.equals("themmon"))
                         {
-                            if(ktra){
-                                HienThiDSMon();
-                                Toast.makeText(getActivity(),"Thêm thành công",Toast.LENGTH_SHORT).show();
-                            }else {
-                                Toast.makeText(getActivity(),"Thêm thất bại",Toast.LENGTH_SHORT).show();
-                            }
+                            HienThiDSMon();
+                            Toast.makeText(getActivity(),"Thêm thành công",Toast.LENGTH_SHORT).show();
                         }else {
                             if(ktra){
                                 HienThiDSMon();
@@ -85,6 +92,7 @@ public class DisplayMenuFragment extends Fragment {
             maloai = bundle.getInt("maloai");
             tenloai = bundle.getString("tenloai");
             maban = bundle.getInt("maban");
+            madon = bundle.getInt("madon");
             HienThiDSMon();
 
             gvDisplayMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -97,6 +105,7 @@ public class DisplayMenuFragment extends Fragment {
                             Intent iAmount = new Intent(getActivity(), AmountMenuActivity.class);
                             iAmount.putExtra("maban",maban);
                             iAmount.putExtra("mamon",monDTOList.get(position).getMaMon());
+                            iAmount.putExtra("madon",madon);
                             startActivity(iAmount);
                         }else {
                             Toast.makeText(getActivity(),"Món đã hết, không thể thêm", Toast.LENGTH_SHORT).show();
@@ -111,7 +120,7 @@ public class DisplayMenuFragment extends Fragment {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if(event.getAction() == KeyEvent.ACTION_DOWN){
-                     getParentFragmentManager().popBackStack("hienthiloai", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    getParentFragmentManager().popBackStack("hienthiloai", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 }
                 return false;
             }
@@ -135,26 +144,44 @@ public class DisplayMenuFragment extends Fragment {
         int vitri = menuInfo.position;
         int mamon = monDTOList.get(vitri).getMaMon();
 
-        switch (id){
-            case R.id.itEdit:
-                Intent iEdit = new Intent(getActivity(), AddMenuActivity.class);
-                iEdit.putExtra("mamon",mamon);
-                iEdit.putExtra("maLoai",maloai);
-                iEdit.putExtra("tenLoai",tenloai);
-                resultLauncherMenu.launch(iEdit);
-                break;
-
-            case R.id.itDelete:
-                boolean ktra = monDAO.XoaMon(mamon);
-                if(ktra){
-                    HienThiDSMon();
+//        switch (id){
+//            case R.id.itEdit:
+        if (id == R.id.itEdit) {
+            Intent iEdit = new Intent(getActivity(), AddMenuActivity.class);
+            iEdit.putExtra("mamon",mamon);
+            iEdit.putExtra("maLoai",maloai);
+            iEdit.putExtra("tenLoai",tenloai);
+            resultLauncherMenu.launch(iEdit);
+//                break;
+//
+//            case R.id.itDelete:
+        } else if (id == R.id.itDelete) {
+//                boolean ktra = monDAO.XoaMon(mamon);
+//                if(ktra){
+//                    HienThiDSMon();
+//                    Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.delete_sucessful)
+//                            ,Toast.LENGTH_SHORT).show();
+//                }else {
+//                    Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.delete_failed)
+//                            ,Toast.LENGTH_SHORT).show();
+//                }
+            Query query = myRef1.orderByChild("maMon").equalTo(mamon);
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                        dataSnapshot.getRef().removeValue();
+                    }
                     Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.delete_sucessful)
                             ,Toast.LENGTH_SHORT).show();
-                }else {
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
                     Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.delete_failed)
                             ,Toast.LENGTH_SHORT).show();
                 }
-                break;
+            });
         }
         return true;
     }
@@ -170,21 +197,37 @@ public class DisplayMenuFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch (id){
-            case R.id.itAddMenu:
-                Intent intent = new Intent(getActivity(), AddMenuActivity.class);
-                intent.putExtra("maLoai",maloai);
-                intent.putExtra("tenLoai",tenloai);
-                resultLauncherMenu.launch(intent);
-                break;
+//        switch (id){
+//            case R.id.itAddMenu:
+        if (id == R.id.itAddMenu) {
+            Intent intent = new Intent(getActivity(), AddMenuActivity.class);
+            intent.putExtra("maLoai",maloai);
+            intent.putExtra("tenLoai",tenloai);
+            resultLauncherMenu.launch(intent);
         }
         return super.onOptionsItemSelected(item);
     }
     private void HienThiDSMon(){
-        monDTOList = monDAO.LayDSMonTheoLoai(maloai);
-        adapterDisplayMenu = new AdapterDisplayMenu(getActivity(),R.layout.custom_layout_displaymenu,monDTOList);
-        gvDisplayMenu.setAdapter(adapterDisplayMenu);
-        adapterDisplayMenu.notifyDataSetChanged();
+        myRef1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                monDTOList.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    MonDTO monDTO = dataSnapshot.getValue(MonDTO.class);
+                    if(monDTO.getMaLoai() == maloai){
+                        monDTOList.add(monDTO);
+                    }
+                }
+                adapterDisplayMenu = new AdapterDisplayMenu(getActivity(),R.layout.custom_layout_displaymenu,monDTOList);
+                gvDisplayMenu.setAdapter(adapterDisplayMenu);
+                adapterDisplayMenu.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
 }

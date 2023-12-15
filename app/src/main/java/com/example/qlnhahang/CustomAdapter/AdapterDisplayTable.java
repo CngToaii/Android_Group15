@@ -1,18 +1,23 @@
 package com.example.qlnhahang.CustomAdapter;
 
+import static com.example.qlnhahang.Activities.LoginActivity.maNv;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import com.example.qlnhahang.Activities.HomeActivity;
 import com.example.qlnhahang.Activities.PaymentActivity;
@@ -26,8 +31,9 @@ import com.example.qlnhahang.R;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
-public class AdapterDisplayTable extends BaseAdapter implements View.OnClickListener{
+public class AdapterDisplayTable extends BaseAdapter implements View.OnClickListener {
 
     Context context;
     int layout;
@@ -36,14 +42,14 @@ public class AdapterDisplayTable extends BaseAdapter implements View.OnClickList
     BanAnDAO banAnDAO;
     DonDatDAO donDatDAO;
     FragmentManager fragmentManager;
-
-    public AdapterDisplayTable(Context context, int layout, List<BanAnDTO> banAnDTOList){
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference("BanAn");
+    DatabaseReference myRef1 = database.getReference("DonDat");
+    public AdapterDisplayTable(Context context, int layout, List<BanAnDTO> banAnDTOList) {
         this.context = context;
         this.layout = layout;
         this.banAnDTOList = banAnDTOList;
-        banAnDAO = new BanAnDAO(context);
-        donDatDAO = new DonDatDAO(context);
-        fragmentManager = ((HomeActivity)context).getSupportFragmentManager();
+        fragmentManager = ((HomeActivity) context).getSupportFragmentManager();
     }
 
     @Override
@@ -65,35 +71,34 @@ public class AdapterDisplayTable extends BaseAdapter implements View.OnClickList
     public View getView(int position, View convertView, ViewGroup parent) {
 
         View view = convertView;
-        if(view == null){
+        if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             viewHolder = new ViewHolder();
-            view = inflater.inflate(layout,parent,false);
+            view = inflater.inflate(layout, parent, false);
 
             viewHolder.imgBanAn = (ImageView) view.findViewById(R.id.img_customtable_BanAn);
             viewHolder.imgGoiMon = (ImageView) view.findViewById(R.id.img_customtable_GoiMon);
             viewHolder.imgThanhToan = (ImageView) view.findViewById(R.id.img_customtable_ThanhToan);
             viewHolder.imgAnNut = (ImageView) view.findViewById(R.id.img_customtable_AnNut);
-            viewHolder.txtTenBanAn = (TextView)view.findViewById(R.id.txt_customtable_TenBanAn);
+            viewHolder.txtTenBanAn = (TextView) view.findViewById(R.id.txt_customtable_TenBanAn);
 
             view.setTag(viewHolder);
-        }else {
+        } else {
             viewHolder = (ViewHolder) view.getTag();
         }
-        if(banAnDTOList.get(position).isDuocChon()){
+        if (banAnDTOList.get(position).isDuocChon()) {
             HienThiButton();
-        }else {
+        } else {
             AnButton();
         }
 
         BanAnDTO banAnDTO = banAnDTOList.get(position);
 
-        String kttinhtrang = banAnDAO.LayTinhTrangBanTheoMa(banAnDTO.getMaBan());
         //đổi hình theo tình trạng
-        if(kttinhtrang.equals("true")){
-            viewHolder.imgBanAn.setImageResource(R.drawable.ic_baseline_airline_seat_legroom_normal_40);
-        }else {
-            viewHolder.imgBanAn.setImageResource(R.drawable.ic_baseline_event_seat_40);
+        if (banAnDTO.isDuocChon()) {
+            viewHolder.imgBanAn.setImageResource(R.drawable.iconfull);
+        } else {
+            viewHolder.imgBanAn.setImageResource(R.drawable.icontrong);
         }
 
         viewHolder.txtTenBanAn.setText(banAnDTO.getTenBan());
@@ -119,72 +124,77 @@ public class AdapterDisplayTable extends BaseAdapter implements View.OnClickList
         String tenban = banAnDTOList.get(vitri1).getTenBan();
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        String ngaydat= dateFormat.format(calendar.getTime());
+        String ngaydat = dateFormat.format(calendar.getTime());
 
-        switch (id){
-            case R.id.img_customtable_BanAn:
-                int vitri = (int)v.getTag();
-                banAnDTOList.get(vitri).setDuocChon(true);
-                HienThiButton();
-                break;
+//        switch (id){
+//            case R.id.img_customtable_BanAn:
+        if (id == R.id.img_customtable_BanAn) {
+            int vitri = (int) v.getTag();
+//            banAnDTOList.get(vitri).setDuocChon(true);
+            HienThiButton();
+//                break;
+//
+//            case R.id.img_customtable_AnNut:
+        } else if (id == R.id.img_customtable_AnNut) {
+            AnButton();
+//                break;
+//
+//            case R.id.img_customtable_GoiMon:
+        } else if (id == R.id.img_customtable_GoiMon) {
+//            Intent getIHome = ((HomeActivity) context).getIntent();
+            int manv = maNv;
+            Log.d("vitri>>>>>>>", vitri1+"");
+            DonDatDTO donDatDTO = new DonDatDTO();
+            Log.d("tinhtrang", banAnDTOList.get(vitri1).getTenBan()+"");
+            if (!banAnDTOList.get(vitri1).isDuocChon()) {
+                //Thêm bảng gọi món và update tình trạng bàn
+                Log.d("tinhtrang", "vào đây");
 
-            case R.id.img_customtable_AnNut:
-                AnButton();
-                break;
+                donDatDTO.setMaDonDat(new Random().nextInt(1000000));
+                donDatDTO.setMaBan(maban);
+                donDatDTO.setMaNV(manv);
+                donDatDTO.setNgayDat(ngaydat);
+                donDatDTO.setTinhTrang("false");
+                donDatDTO.setTongTien("0");
+                myRef1.child(donDatDTO.getMaBan()+"").child(donDatDTO.getMaDonDat()+"").setValue(donDatDTO);
+                myRef.child(String.valueOf(maban)).child("duocChon").setValue(true);
+            }
+            //chuyển qua trang category
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            DisplayCategoryFragment displayCategoryFragment = new DisplayCategoryFragment();
 
-            case R.id.img_customtable_GoiMon:
-                Intent getIHome = ((HomeActivity)context).getIntent();
-                int manv = getIHome.getIntExtra("manv",0);
-                String tinhtrang = banAnDAO.LayTinhTrangBanTheoMa(maban);
+            Bundle bDataCategory = new Bundle();
+            bDataCategory.putInt("maban", maban);
+            bDataCategory.putInt("madon", donDatDTO.getMaDonDat());
+            displayCategoryFragment.setArguments(bDataCategory);
 
-                if(tinhtrang.equals("false")){
-                    //Thêm bảng gọi món và update tình trạng bàn
-                    DonDatDTO donDatDTO = new DonDatDTO();
-                    donDatDTO.setMaBan(maban);
-                    donDatDTO.setMaNV(manv);
-                    donDatDTO.setNgayDat(ngaydat);
-                    donDatDTO.setTinhTrang("false");
-                    donDatDTO.setTongTien("0");
+            transaction.replace(R.id.contentView, displayCategoryFragment).addToBackStack("hienthibanan");
+            transaction.commit();
+        }
+        if (id == R.id.img_customtable_ThanhToan) {
+            //chuyển dữ liệu qua trang thanh toán
+            Intent iThanhToan = new Intent(context, PaymentActivity.class);
+            iThanhToan.putExtra("maban", maban);
+            iThanhToan.putExtra("tenban", tenban);
+            iThanhToan.putExtra("ngaydat", ngaydat);
+            context.startActivity(iThanhToan);
 
-                    long ktra = donDatDAO.ThemDonDat(donDatDTO);
-                    banAnDAO.CapNhatTinhTrangBan(maban,"true");
-                    if(ktra == 0){ Toast.makeText(context,context.getResources().getString(R.string.add_failed),Toast.LENGTH_SHORT).show(); }
-                }
-                //chuyển qua trang category
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                DisplayCategoryFragment displayCategoryFragment = new DisplayCategoryFragment();
-
-                Bundle bDataCategory = new Bundle();
-                bDataCategory.putInt("maban",maban);
-                displayCategoryFragment.setArguments(bDataCategory);
-
-                transaction.replace(R.id.contentView,displayCategoryFragment).addToBackStack("hienthibanan");
-                transaction.commit();
-                break;
-
-            case R.id.img_customtable_ThanhToan:
-                //chuyển dữ liệu qua trang thanh toán
-                Intent iThanhToan = new Intent(context, PaymentActivity.class);
-                iThanhToan.putExtra("maban",maban);
-                iThanhToan.putExtra("tenban",tenban);
-                iThanhToan.putExtra("ngaydat",ngaydat);
-                context.startActivity(iThanhToan);
-                break;
         }
     }
 
-    private void HienThiButton(){
+    private void HienThiButton() {
         viewHolder.imgGoiMon.setVisibility(View.VISIBLE);
         viewHolder.imgThanhToan.setVisibility(View.VISIBLE);
         viewHolder.imgAnNut.setVisibility(View.VISIBLE);
     }
-    private void AnButton(){
+
+    private void AnButton() {
         viewHolder.imgGoiMon.setVisibility(View.INVISIBLE);
         viewHolder.imgThanhToan.setVisibility(View.INVISIBLE);
         viewHolder.imgAnNut.setVisibility(View.INVISIBLE);
     }
 
-    public class ViewHolder{
+    public class ViewHolder {
         ImageView imgBanAn, imgGoiMon, imgThanhToan, imgAnNut;
         TextView txtTenBanAn;
     }

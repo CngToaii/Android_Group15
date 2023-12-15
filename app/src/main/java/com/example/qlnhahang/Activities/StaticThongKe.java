@@ -1,305 +1,200 @@
 package com.example.qlnhahang.Activities;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Adapter;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.qlnhahang.DAO.DonDatDAO;
-import com.example.qlnhahang.DTO.DonDatDTO;
-import com.example.qlnhahang.R;
-import com.github.mikephil.charting.charts.HorizontalBarChart;
-import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-import java.text.DecimalFormat;
+import com.example.qlnhahang.DAO.DonDatDAO;
+import com.example.qlnhahang.DTO.DonDatDTO;
+import com.example.qlnhahang.R;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Random;
 
 @SuppressLint("SimpleDateFormat")
 public class StaticThongKe extends AppCompatActivity {
-    private Spinner spinner,sprinerweek;
-    private HorizontalBarChart chartMonth,chartWeek;
-    private TextView tvdaonhthu;
 
+    BarChart barChart;
+    ArrayList<String> dates;
+    Random random;
+    ArrayList<BarEntry> barEntries;
     DonDatDAO donDatDAO;
-    List<DonDatDTO> listdondat;
-
+    List<DonDatDTO> listdondat = new ArrayList<>();
+    TextView tvbatdau, tvketthuc;
+    FloatingActionButton floatingActionButton;
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference myRef = database.getReference("DonDat");
+    final Calendar myCalendar1 = Calendar.getInstance();
+    final Calendar myCalendar2 = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_static_thong_ke);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
-        spinner = findViewById(R.id.spinner_year);
-        sprinerweek = findViewById(R.id.spinner_month);
-        chartMonth = findViewById(R.id.chartMonth);
-        tvdaonhthu = findViewById(R.id.tvdoanhthu);
-        chartWeek = findViewById(R.id.chatweek);
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -7);
+
 
         donDatDAO = new DonDatDAO(this);
+//        listdondat = donDatDAO.LayDSDonDat();
+
+        barChart = (BarChart) findViewById(R.id.barchart);
 
 
-        Long daonhthu =0L;
-        for(DonDatDTO object :donDatDAO.LayDSDonDat()){
-            daonhthu+=Long.valueOf(object.getTongTien());
-        }
-        DecimalFormat formatter = new DecimalFormat("###,###,###,###");
-        tvdaonhthu.setText(formatter.format(daonhthu)+" VNĐ");
+        tvbatdau = findViewById(R.id.tvbatdau);
+        tvketthuc = findViewById(R.id.tvketthuc);
+        floatingActionButton = findViewById(R.id.floatingActionButton);
 
+        Date date = new Date();
+        tvketthuc.setText(simpleDateFormat.format(date));
+        tvbatdau.setText(simpleDateFormat.format(cal.getTime()));
 
-
-        List<Integer> years =new ArrayList<>();
-        List<Integer> month =new ArrayList<>();
-        Calendar calendar = Calendar.getInstance();
-        int currnetYear = calendar.get(Calendar.YEAR);
-
-        for(int i=0;i<5;i++){
-            years.add(currnetYear);
-            currnetYear=currnetYear-1;
-        }
-
-        for(int i=1;i<13;i++){
-            month.add(i);
-        }
-
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(getApplicationContext(),
-                android.R.layout.simple_spinner_item, years);
-
-        ArrayAdapter<Integer> adaptermonth = new ArrayAdapter<Integer>(getApplicationContext(),
-                android.R.layout.simple_spinner_item, month);
-
-        // Layout for All ROWs of Spinner.  (Optional for ArrayAdapter).
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adaptermonth.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinner.setAdapter(adapter);
-        sprinerweek.setAdapter(adaptermonth);
-
-        this.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
+        DatePickerDialog.OnDateSetListener dates = new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                try {
-                    onItemSelectedHandler(parent, view, position, id);
-                    setDataweek(1);
-                    Toast.makeText(getApplicationContext(),"Chạm vào biểu đồ để thay đổi dữ liệu",Toast.LENGTH_SHORT).show();
-                } catch (ParseException e) {
-                    e.printStackTrace();
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                myCalendar1.set(Calendar.YEAR, year);
+                myCalendar1.set(Calendar.MONTH, month);
+                myCalendar1.set(Calendar.DAY_OF_MONTH, day);
+                String myFormat = "dd-MM-yyyy";
+                SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.US);
+                tvbatdau.setText(dateFormat.format(myCalendar1.getTime()));
+            }
+        };
+
+        tvbatdau.setOnClickListener(view -> {
+            new DatePickerDialog(StaticThongKe.this, dates, myCalendar1.get(Calendar.YEAR), myCalendar1.get(Calendar.MONTH), myCalendar1.get(Calendar.DAY_OF_MONTH)).show();
+        });
+
+        DatePickerDialog.OnDateSetListener date2 = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                myCalendar2.set(Calendar.YEAR, year);
+                myCalendar2.set(Calendar.MONTH, month);
+                myCalendar2.set(Calendar.DAY_OF_MONTH, day);
+                String myFormat = "dd-MM-yyyy";
+                SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.US);
+                tvketthuc.setText(dateFormat.format(myCalendar2.getTime()));
+
+            }
+        };
+
+        tvketthuc.setOnClickListener(view -> {
+            new DatePickerDialog(StaticThongKe.this, date2, myCalendar2.get(Calendar.YEAR), myCalendar2.get(Calendar.MONTH), myCalendar2.get(Calendar.DAY_OF_MONTH)).show();
+        });
+
+        floatingActionButton.setOnClickListener(view -> {
+            if (myCalendar1.before(myCalendar2)) {
+                createRandomBarGraph(tvbatdau.getText().toString(), tvketthuc.getText().toString());
+                barChart.notifyDataSetChanged();
+                Toast.makeText(StaticThongKe.this, "Chạm vào biểu đồ để RESET", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(StaticThongKe.this, "Dữ liệu đưa vào không hợp lệ", Toast.LENGTH_SHORT).show();
+            }
+        });
+        createRandomBarGraph(tvbatdau.getText().toString(), tvketthuc.getText().toString());
+        myRef.addValueEventListener(new com.google.firebase.database.ValueEventListener() {
+            @Override
+            public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    listdondat.clear();
+                    for (com.google.firebase.database.DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        DonDatDTO donDatDTO = dataSnapshot1.getChildren().iterator().next().getValue(DonDatDTO.class);
+                        listdondat.add(donDatDTO);
+                        Log.d("listdondat>>>>>", listdondat.size() + "" + donDatDTO.getNgayDat());
+                    }
                 }
-
-                sprinerweek.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                        onItemSelectedHandlerMonth(parent, view, position, id);
-                        Toast.makeText(getApplicationContext(),"Chạm vào biểu đồ để thay đổi dữ liệu",Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void onCancelled(DatabaseError databaseError) {
 
             }
         });
-
-
-
-
     }
 
-    private void onItemSelectedHandlerMonth(AdapterView<?> parent, View view, int position, long id) {
-        Adapter adapter = parent.getAdapter();
-        Integer month = (Integer) adapter.getItem(position);
+    public void createRandomBarGraph(String Date1, String Date2) {
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
         try {
-            setDataweek(month);
+            Date date1 = simpleDateFormat.parse(Date1);
+            Date date2 = simpleDateFormat.parse(Date2);
+
+            Calendar mDate1 = Calendar.getInstance();
+            Calendar mDate2 = Calendar.getInstance();
+            mDate1.clear();
+            mDate2.clear();
+
+            mDate1.setTime(date1);
+            mDate2.setTime(date2);
+
+            dates = new ArrayList<>();
+            dates = getList(mDate1, mDate2);
+
+            barEntries = new ArrayList<>();
+            random = new Random();
+            for (int j = 0; j < dates.size(); j++) {
+                long tong = 0;
+                for (DonDatDTO dt : listdondat) {
+                    if (dt.getNgayDat().equals(dates.get(j))) {
+                        tong += Long.parseLong(dt.getTongTien());
+                    }
+                }
+                barEntries.add(new BarEntry(tong, j));
+            }
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        BarDataSet barDataSet = new BarDataSet(barEntries, "Vietnam đồng");
+        BarData barData = new BarData(dates, barDataSet);
+        barChart.setData(barData);
+
     }
 
-    private void setDataweek(Integer month) throws ParseException {
-        ArrayList<BarEntry> monthChart =new ArrayList<>();
-        List<DonDatDTO> filterDtaaW = filterMonth(month,listdondat);
-        Log.d("AAA",filterDtaaW.toString());
-        List<ThongkeThang> listthongke = new ArrayList<>();
-        for(int i=1;i<=5;i++){
-            ThongkeThang thongkeThang = new ThongkeThang();
-            thongkeThang.setThang(i);
-            Long price = 0L;
-            for (DonDatDTO object: filterDtaaW) {
-                if(getWEEK(object.getNgayDat())==i) {
-                    price += Long.valueOf(object.getTongTien());
-                }
-            }
-            thongkeThang.setPrice(price);
-            listthongke.add(thongkeThang);
+    public ArrayList<String> getList(Calendar startDate, Calendar endDate) {
+        ArrayList<String> list = new ArrayList<String>();
+        while (startDate.compareTo(endDate) <= 0) {
+            list.add(getDate(startDate));
+            startDate.add(Calendar.DAY_OF_MONTH, 1);
         }
-        for(ThongkeThang object : listthongke){
-            Log.d("ARR",object.toString());
-            monthChart.add(new BarEntry((float)object.getThang(), (float) (object.getPrice() / 1000)));
-        }
-        BarDataSet set1;
-        set1 = new BarDataSet(monthChart,"ĐƠN VỊ 1000 VND");
-        set1.setValueTextSize(14);
-        set1.setColors(ColorTemplate.COLORFUL_COLORS);
-        BarData barData = new BarData(set1);
-        barData.setValueTextSize(14);
-        XAxis xl = chartWeek.getXAxis();
-        chartWeek.setBackgroundColor(Color.parseColor("#ffffcc"));
-        xl.setTextSize(14);
-
-        chartWeek.setData(barData);
+        return list;
     }
 
-    private int getWEEK(String thoiGianKT) throws ParseException {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(convertStringToDate(thoiGianKT));
-        return calendar.get(Calendar.WEEK_OF_MONTH);
-    }
-
-    private List<DonDatDTO> filterMonth(Integer month, List<DonDatDTO> filtedata) {
-        List<DonDatDTO> dataNew = new ArrayList<>();
-        for (DonDatDTO object: filtedata) {
-            if(getMonth(object.getNgayDat()) == month) {
-                Log.d("SSS",object.toString());
-                dataNew.add(object);
-            }
-        }
-        return dataNew;
-    }
-
-
-    private void setData(int year) throws ParseException {
-        ArrayList<BarEntry> monthChart =new ArrayList<>();
-        listdondat = filterYear(year,donDatDAO.LayDSDonDat());
-        Log.d("AAA",donDatDAO.LayDSDonDat().toString());
-        List<ThongkeThang> listthongke = new ArrayList<>();
-        for(int i=1;i<13;i++){
-            ThongkeThang thongkeThang = new ThongkeThang();
-            thongkeThang.setThang(i);
-            Long price = 0L;
-            for (DonDatDTO object: listdondat) {
-                if(getMonth(object.getNgayDat())==i) {
-                    price += Long.valueOf( object.getTongTien());
-                }
-            }
-            thongkeThang.setPrice(price);
-            listthongke.add(thongkeThang);
-        }
-
-        for(ThongkeThang object : listthongke){
-            Log.d("ARR",object.toString());
-            monthChart.add(new BarEntry((float)object.getThang(), (float) (object.getPrice() / 1000)));
-        }
-
-        BarDataSet set1;
-        set1 = new BarDataSet(monthChart,"ĐƠN VỊ 1000 VND");
-        set1.setValueTextSize(14);
-        set1.setColors(ColorTemplate.COLORFUL_COLORS);
-        BarData barData = new BarData(set1);
-        barData.setValueTextSize(14);
-        XAxis xl = chartMonth.getXAxis();
-        xl.setTextSize(14);
-
-        chartMonth.setData(barData);
-
-    }
-
-    private void onItemSelectedHandler(AdapterView<?> adapterView, View view, int position, long id) throws ParseException {
-        Adapter adapter = adapterView.getAdapter();
-        Integer year = (Integer) adapter.getItem(position);
-        Toast.makeText(this,year+"",Toast.LENGTH_SHORT).show();
-        setData(year);
-    }
-
-    private int getMonth(String thoiGianKT) {
-        Date date = null;
+    public String getDate(Calendar cld) {
+        String curDate = cld.get(Calendar.DAY_OF_MONTH) + "-" + (cld.get(Calendar.MONTH) + 1)
+                + "-" + cld.get(Calendar.YEAR);
         try {
-            date = convertStringToDate(thoiGianKT);
+            Date date = new SimpleDateFormat("dd-MM-yyyy").parse(curDate);
+            curDate = new SimpleDateFormat("dd-MM-yyyy").format(date);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return date.getMonth()+1;
+        return curDate;
     }
 
-    private List<DonDatDTO> filterYear(Integer year, List<DonDatDTO> all) throws ParseException {
-        List<DonDatDTO> dataNew = new ArrayList<>();
-        for (DonDatDTO object: all) {
-            if(getYear(object.getNgayDat()) == year) {
-                dataNew.add(object);
-            }
-        }
-        return dataNew;
-    }
-
-    private int getYear(String thoiGianKT) throws ParseException {
-        Date date = null;
-        date = convertStringToDate(thoiGianKT);
-        return date.getYear()+1900;
-    }
-
-    private Date convertStringToDate(String thoiGianKT) throws ParseException {
-        return new SimpleDateFormat("dd-MM-yyyy").parse(thoiGianKT);
-    }
-
-    private class ThongkeThang {
-        int thang;
-        Long price;
-
-        public ThongkeThang() {
-        }
-
-        public ThongkeThang(int thang, Long price) {
-            this.thang = thang;
-            this.price = price;
-        }
-
-        @Override
-        public String toString() {
-            return "ThongkeThang{" +
-                    "thang=" + thang +
-                    ", price=" + price +
-                    '}';
-        }
-
-        public int getThang() {
-            return thang;
-        }
-
-        public void setThang(int thang) {
-            this.thang = thang;
-        }
-
-        public Long getPrice() {
-            return price;
-        }
-
-        public void setPrice(Long price) {
-            this.price = price;
-        }
-    }
 }

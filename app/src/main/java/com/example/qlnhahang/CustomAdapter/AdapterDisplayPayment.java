@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,8 +74,9 @@ public class AdapterDisplayPayment extends BaseAdapter {
         viewHolder.txt_custompayment_SoLuong.setText(String.valueOf(thanhToanDTO.getSoLuong()));
         viewHolder.txt_custompayment_GiaTien.setText(thanhToanDTO.getGiaTien() +" đ");
 
-        byte[] paymentimg = thanhToanDTO.getHinhAnh();
-        Bitmap bitmap = BitmapFactory.decodeByteArray(paymentimg,0,paymentimg.length);
+        String paymentimg = thanhToanDTO.getHinhAnh();
+        byte[] decodedString = Base64.decode(paymentimg, Base64.DEFAULT);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         viewHolder.img_custompayment_HinhMon.setImageBitmap(bitmap);
 
 

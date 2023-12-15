@@ -5,18 +5,6 @@ public class DonDatDTO {
     int MaDonDat,MaBan ,MaNV;
     String TinhTrang,NgayDat,TongTien;
 
-    @Override
-    public String toString() {
-        return "DonDatDTO{" +
-                "MaDonDat=" + MaDonDat +
-                ", MaBan=" + MaBan +
-                ", MaNV=" + MaNV +
-                ", TinhTrang='" + TinhTrang + '\'' +
-                ", NgayDat='" + NgayDat + '\'' +
-                ", TongTien='" + TongTien + '\'' +
-                '}';
-    }
-
     public int getMaDonDat() {
         return MaDonDat;
     }

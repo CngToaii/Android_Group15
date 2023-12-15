@@ -3,6 +3,7 @@ package com.example.qlnhahang.CustomAdapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,9 +40,10 @@ public class AdapterRecycleViewCategory extends RecyclerView.Adapter<AdapterRecy
     public void onBindViewHolder(ViewHolder holder, int position) {
         LoaiMonDTO loaiMonDTO = loaiMonDTOList.get(position);
         holder.txt_customcategory_TenLoai.setText(loaiMonDTO.getTenLoai());
-        byte[] categoryimage = loaiMonDTO.getHinhAnh();
-        Bitmap bitmap = BitmapFactory.decodeByteArray(categoryimage,0,categoryimage.length);
-        holder.img_customcategory_HinhLoai.setImageBitmap(bitmap);
+        String categoryimage = loaiMonDTO.getHinhAnh();
+        byte[] bitmap = Base64.decode(categoryimage, Base64.DEFAULT);
+        Bitmap bitmap1 = BitmapFactory.decodeByteArray(bitmap,0,bitmap.length);
+        holder.img_customcategory_HinhLoai.setImageBitmap(bitmap1);
     }
 
     @Override

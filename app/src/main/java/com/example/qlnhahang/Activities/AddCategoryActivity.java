@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,16 +18,22 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.example.qlnhahang.DAO.LoaiMonDAO;
 import com.example.qlnhahang.DTO.LoaiMonDTO;
 import com.example.qlnhahang.R;
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Random;
 
 public class AddCategoryActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -37,6 +44,10 @@ public class AddCategoryActivity extends AppCompatActivity implements View.OnCli
     LoaiMonDAO loaiMonDAO;
     int maloai = 0;
     Bitmap bitmapold;   //Bitmap dạng ảnh theo ma trận các pixel
+
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference myRef = database.getReference("LoaiMon");
+
 
     //dùng result launcher do activityforresult ko dùng đc nữa
     ActivityResultLauncher<Intent> resultLauncherOpenIMG = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
@@ -68,7 +79,7 @@ public class AddCategoryActivity extends AppCompatActivity implements View.OnCli
         TXTL_addcategory_TenLoai = (TextInputLayout)findViewById(R.id.txtl_addcategory_TenLoai);
         IMG_addcategory_back = (ImageView)findViewById(R.id.img_addcategory_back);
         IMG_addcategory_ThemHinh = (ImageView)findViewById(R.id.img_addcategory_ThemHinh);
-        TXT_addcategory_title = (TextView)findViewById(R.id.txt_addcategory_title);
+
         //endregion
 
         BitmapDrawable olddrawable = (BitmapDrawable)IMG_addcategory_ThemHinh.getDrawable();
@@ -83,8 +94,9 @@ public class AddCategoryActivity extends AppCompatActivity implements View.OnCli
             //Hiển thị lại thông tin từ csdl
             TXTL_addcategory_TenLoai.getEditText().setText(loaiMonDTO.getTenLoai());
 
-            byte[] categoryimage = loaiMonDTO.getHinhAnh();
-            Bitmap bitmap = BitmapFactory.decodeByteArray(categoryimage,0,categoryimage.length);
+            String categoryimage = loaiMonDTO.getHinhAnh();
+            byte[] categoryimagebyte = Base64.decode(categoryimage, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(categoryimagebyte,0,categoryimagebyte.length);
             IMG_addcategory_ThemHinh.setImageBitmap(bitmap);
 
             BTN_addcategory_TaoLoai.setText("Sửa loại");
@@ -99,56 +111,77 @@ public class AddCategoryActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        boolean ktra;
+        final boolean[] ktra = {false};
         String chucnang;
-        switch (id){
-            case R.id.img_addcategory_back:
-                finish();
-                overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right); //animation
-                break;
+//        switch (id){
+//            case R.id.img_addcategory_back:
+        if(id == R.id.img_addcategory_back){
+            finish();
+            overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right); //animation
+//                break;
+//
+//            case R.id.img_addcategory_ThemHinh:
+        }else if(id == R.id.img_addcategory_ThemHinh){
+            Intent iGetIMG = new Intent();
+            iGetIMG.setType("image/*"); //lấy những mục chứa hình ảnh
+            iGetIMG.setAction(Intent.ACTION_GET_CONTENT);   //lấy mục hiện tại đang chứa hình
+            resultLauncherOpenIMG.launch(Intent.createChooser(iGetIMG,getResources().getString(R.string.choseimg)));    //mở intent chọn hình ảnh
+//                break;
+//
+//            case R.id.btn_addcategory_TaoLoai:
+        }else if(id == R.id.btn_addcategory_TaoLoai){
+            if(!validateImage() | !validateName()){
+                return;
+            }
 
-            case R.id.img_addcategory_ThemHinh:
-                Intent iGetIMG = new Intent();
-                iGetIMG.setType("image/*"); //lấy những mục chứa hình ảnh
-                iGetIMG.setAction(Intent.ACTION_GET_CONTENT);   //lấy mục hiện tại đang chứa hình
-                resultLauncherOpenIMG.launch(Intent.createChooser(iGetIMG,getResources().getString(R.string.choseimg)));    //mở intent chọn hình ảnh
-                break;
+            String sTenLoai = TXTL_addcategory_TenLoai.getEditText().getText().toString();
+            LoaiMonDTO loaiMonDTO = new LoaiMonDTO();
+            loaiMonDTO.setTenLoai(sTenLoai);
+            loaiMonDTO.setHinhAnh(imageViewtoByte(IMG_addcategory_ThemHinh));
+            if(maloai != 0){
+                myRef.child(String.valueOf(maloai)).setValue(loaiMonDTO).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            ktra[0] = true;
+                        }else {
+                            ktra[0] = false;
+                        }
+                    }
+                });
+                chucnang = "sualoai";
+            }else {
+                loaiMonDTO.setMaLoai(new Random().nextInt(100000));
+                myRef.child(String.valueOf(loaiMonDTO.getMaLoai())).setValue(loaiMonDTO).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            ktra[0] = true;
+                        }else {
+                            ktra[0] = false;
+                        }
+                    }
+                });
+                chucnang = "themloai";
+            }
 
-            case R.id.btn_addcategory_TaoLoai:
-                if(!validateImage() | !validateName()){
-                    return;
-                }
-
-                String sTenLoai = TXTL_addcategory_TenLoai.getEditText().getText().toString();
-                LoaiMonDTO loaiMonDTO = new LoaiMonDTO();
-                loaiMonDTO.setTenLoai(sTenLoai);
-                loaiMonDTO.setHinhAnh(imageViewtoByte(IMG_addcategory_ThemHinh));
-                if(maloai != 0){
-                    ktra = loaiMonDAO.SuaLoaiMon(loaiMonDTO,maloai);
-                    chucnang = "sualoai";
-                }else {
-                    ktra = loaiMonDAO.ThemLoaiMon(loaiMonDTO);
-                    chucnang = "themloai";
-                }
-
-                //Thêm, sửa loại dựa theo obj loaimonDTO
-                Intent intent = new Intent();
-                intent.putExtra("ktra",ktra);
-                intent.putExtra("chucnang",chucnang);
-                setResult(RESULT_OK,intent);
-                finish();
-                break;
-
+            //Thêm, sửa loại dựa theo obj loaimonDTO
+            Intent intent = new Intent();
+            intent.putExtra("ktra", ktra[0]);
+            intent.putExtra("chucnang",chucnang);
+            setResult(RESULT_OK,intent);
+            finish();
         }
     }
 
     //Chuyển ảnh bitmap về mảng byte lưu vào csdl
-    private byte[] imageViewtoByte(ImageView imageView){
+    private String imageViewtoByte(ImageView imageView){
         Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
         byte[] byteArray = stream.toByteArray();
-        return byteArray;
+        String imageString = Base64.encodeToString(byteArray,Base64.DEFAULT);
+        return imageString;
     }
 
     //region validate fields

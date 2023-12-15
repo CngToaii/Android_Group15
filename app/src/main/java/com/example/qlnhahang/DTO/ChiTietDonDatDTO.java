@@ -5,6 +5,8 @@ public class ChiTietDonDatDTO {
     int MaDonDat, MaMon, SoLuong;
 
 
+    public ChiTietDonDatDTO() {
+    }
 
     public int getMaDonDat() {
         return MaDonDat;

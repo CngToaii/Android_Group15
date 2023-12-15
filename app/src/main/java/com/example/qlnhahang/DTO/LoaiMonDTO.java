@@ -4,7 +4,7 @@ public class LoaiMonDTO {
 
     int MaLoai;
     String TenLoai;
-    byte[] HinhAnh;
+    String HinhAnh;
 
 
     public int getMaLoai() {
@@ -23,12 +23,13 @@ public class LoaiMonDTO {
         TenLoai = tenLoai;
     }
 
-    public byte[] getHinhAnh() {
+    public String getHinhAnh() {
         return HinhAnh;
     }
 
-    public void setHinhAnh(byte[] hinhAnh) {
+    public void setHinhAnh(String hinhAnh) {
         HinhAnh = hinhAnh;
     }
 
 }
+

@@ -18,7 +18,15 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import com.example.qlnhahang.Activities.AddStaffActivity;
 import com.example.qlnhahang.Activities.HomeActivity;
@@ -27,15 +35,17 @@ import com.example.qlnhahang.DAO.NhanVienDAO;
 import com.example.qlnhahang.DTO.NhanVienDTO;
 import com.example.qlnhahang.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DisplayStaffFragment extends Fragment {
 
     GridView gvStaff;
     NhanVienDAO nhanVienDAO;
-    List<NhanVienDTO> nhanVienDTOS;
+    List<NhanVienDTO> nhanVienDTOS = new ArrayList<>();
     AdapterDisplayStaff adapterDisplayStaff;
-
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference myRef = database.getReference("NhanVien");
     ActivityResultLauncher<Intent> resultLauncherAdd = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
@@ -46,19 +56,12 @@ public class DisplayStaffFragment extends Fragment {
                         String chucnang = intent.getStringExtra("chucnang");
                         if(chucnang.equals("themnv"))
                         {
-                            if(ktra != 0){
-                                HienThiDSNV();
-                                Toast.makeText(getActivity(),"Thêm thành công",Toast.LENGTH_SHORT).show();
-                            }else {
-                                Toast.makeText(getActivity(),"Thêm thất bại",Toast.LENGTH_SHORT).show();
-                            }
+                            HienThiDSNV();
+                            Toast.makeText(getActivity(),"Thêm thành công",Toast.LENGTH_SHORT).show();
+
                         }else {
-                            if(ktra != 0){
-                                HienThiDSNV();
-                                Toast.makeText(getActivity(),"Sửa thành công",Toast.LENGTH_SHORT).show();
-                            }else {
-                                Toast.makeText(getActivity(),"Sửa thất bại",Toast.LENGTH_SHORT).show();
-                            }
+                            HienThiDSNV();
+                            Toast.makeText(getActivity(),"Thêm thành công",Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -94,24 +97,55 @@ public class DisplayStaffFragment extends Fragment {
         int vitri = menuInfo.position;
         int manv = nhanVienDTOS.get(vitri).getMANV();
 
-        switch (id){
-            case R.id.itEdit:
-                Intent iEdit = new Intent(getActivity(),AddStaffActivity.class);
-                iEdit.putExtra("manv",manv);
-                resultLauncherAdd.launch(iEdit);
-                break;
-
-            case R.id.itDelete:
-                boolean ktra = nhanVienDAO.XoaNV(manv);
-                if(ktra){
-                    HienThiDSNV();
+//        switch (id){
+//            case R.id.itEdit:
+//                Intent iEdit = new Intent(getActivity(),AddStaffActivity.class);
+//                iEdit.putExtra("manv",manv);
+//                resultLauncherAdd.launch(iEdit);
+//                break;
+//
+//            case R.id.itDelete:
+//                boolean ktra = nhanVienDAO.XoaNV(manv);
+//                if(ktra){
+//                    HienThiDSNV();
+//                    Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.delete_sucessful)
+//                            ,Toast.LENGTH_SHORT).show();
+//                }else {
+//                    Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.delete_failed)
+//                            ,Toast.LENGTH_SHORT).show();
+//                }
+//                break;
+//        }
+        if(id == R.id.itXem){
+            Intent iEdit = new Intent(getActivity(),AddStaffActivity.class);
+            iEdit.putExtra("manv",manv);
+            resultLauncherAdd.launch(iEdit);
+        }else if(id == R.id.itDelete){
+            Query query = myRef.orderByChild("manv").equalTo(manv);
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(com.google.firebase.database.DataSnapshot dataSnapshot : snapshot.getChildren()){
+                        dataSnapshot.getRef().removeValue();
+                    }
                     Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.delete_sucessful)
                             ,Toast.LENGTH_SHORT).show();
-                }else {
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
                     Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.delete_failed)
                             ,Toast.LENGTH_SHORT).show();
                 }
-                break;
+            });
+//            if(ktra){
+//                HienThiDSNV();
+//                Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.delete_sucessful)
+//                        ,Toast.LENGTH_SHORT).show();
+//            }else {
+//                Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.delete_failed)
+//                        ,Toast.LENGTH_SHORT).show();
+//            }
         }
 
         return true;
@@ -128,19 +162,45 @@ public class DisplayStaffFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch (id){
-            case R.id.itAddStaff:
-                Intent iDangky = new Intent(getActivity(), AddStaffActivity.class);
-                resultLauncherAdd.launch(iDangky);
-                break;
+//        switch (id){
+//            case R.id.itAddStaff:
+//                Intent iDangky = new Intent(getActivity(), AddStaffActivity.class);
+//                resultLauncherAdd.launch(iDangky);
+//                break;
+//        }
+        if(id == R.id.itAddStaff){
+            Intent iDangky = new Intent(getActivity(), AddStaffActivity.class);
+            resultLauncherAdd.launch(iDangky);
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void HienThiDSNV(){
-        nhanVienDTOS = nhanVienDAO.LayDSNV();
-        adapterDisplayStaff = new AdapterDisplayStaff(getActivity(),R.layout.custom_layout_displaystaff,nhanVienDTOS);
-        gvStaff.setAdapter(adapterDisplayStaff);
-        adapterDisplayStaff.notifyDataSetChanged();
+        myRef.addValueEventListener(new com.google.firebase.database.ValueEventListener() {
+            @Override
+            public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    nhanVienDTOS.clear();
+                    for(com.google.firebase.database.DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                        NhanVienDTO nhanVienDTO = dataSnapshot1.getValue(NhanVienDTO.class);
+                        nhanVienDTOS.add(nhanVienDTO);
+                    }
+                    adapterDisplayStaff = new AdapterDisplayStaff(getActivity(),R.layout.custom_layout_displaystaff,nhanVienDTOS);
+                    gvStaff.setAdapter(adapterDisplayStaff);
+                    adapterDisplayStaff.notifyDataSetChanged();
+                }else{
+                    nhanVienDTOS.clear();
+                    adapterDisplayStaff = new AdapterDisplayStaff(getActivity(),R.layout.custom_layout_displaystaff,nhanVienDTOS);
+                    gvStaff.setAdapter(adapterDisplayStaff);
+                    adapterDisplayStaff.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(com.google.firebase.database.DatabaseError databaseError) {
+
+            }
+        });
     }
 }
+

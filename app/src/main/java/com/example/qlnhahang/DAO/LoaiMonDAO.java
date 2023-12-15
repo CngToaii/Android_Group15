@@ -10,6 +10,7 @@ import com.example.qlnhahang.DTO.LoaiMonDTO;
 import com.example.qlnhahang.Database.CreateDatabase;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class LoaiMonDAO {
@@ -66,7 +67,7 @@ public class LoaiMonDAO {
             LoaiMonDTO loaiMonDTO = new LoaiMonDTO();
             loaiMonDTO.setMaLoai(cursor.getInt(cursor.getColumnIndex(CreateDatabase.TBL_LOAIMON_MALOAI)));
             loaiMonDTO.setTenLoai(cursor.getString(cursor.getColumnIndex(CreateDatabase.TBL_LOAIMON_TENLOAI)));
-            loaiMonDTO.setHinhAnh(cursor.getBlob(cursor.getColumnIndex(CreateDatabase.TBL_LOAIMON_HINHANH)));
+            loaiMonDTO.setHinhAnh(Arrays.toString(cursor.getBlob(cursor.getColumnIndex(CreateDatabase.TBL_LOAIMON_HINHANH))));
             loaiMonDTOList.add(loaiMonDTO);
 
             cursor.moveToNext();
@@ -83,7 +84,7 @@ public class LoaiMonDAO {
         while (!cursor.isAfterLast()){
             loaiMonDTO.setMaLoai(cursor.getInt(cursor.getColumnIndex(CreateDatabase.TBL_LOAIMON_MALOAI)));
             loaiMonDTO.setTenLoai(cursor.getString(cursor.getColumnIndex(CreateDatabase.TBL_LOAIMON_TENLOAI)));
-            loaiMonDTO.setHinhAnh(cursor.getBlob(cursor.getColumnIndex(CreateDatabase.TBL_LOAIMON_HINHANH)));
+            loaiMonDTO.setHinhAnh(Arrays.toString(cursor.getBlob(cursor.getColumnIndex(CreateDatabase.TBL_LOAIMON_HINHANH))));
 
             cursor.moveToNext();
         }

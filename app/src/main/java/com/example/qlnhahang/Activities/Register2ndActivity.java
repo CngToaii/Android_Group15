@@ -2,20 +2,26 @@ package com.example.qlnhahang.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.example.qlnhahang.DAO.NhanVienDAO;
 import com.example.qlnhahang.DAO.QuyenDAO;
 import com.example.qlnhahang.DTO.NhanVienDTO;
 import com.example.qlnhahang.R;
 
 import java.util.Calendar;
+import java.util.Random;
 
 public class Register2ndActivity extends AppCompatActivity {
 
@@ -25,6 +31,9 @@ public class Register2ndActivity extends AppCompatActivity {
     String hoTen,tenDN,eMail,sDT,matKhau,gioiTinh;
     NhanVienDAO nhanVienDAO;
     QuyenDAO quyenDAO;
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference myRef = database.getReference("Quyen");
+    private DatabaseReference myRef1 = database.getReference("NhanVien");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,23 +62,32 @@ public class Register2ndActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!validateAge() | !validateGender()){
+                    Log.d("kiemtra","validateAge: " + validateAge() + " validateGender: " + validateGender());
                     return;
                 }
 
                 //lấy các thông tin còn lại
-                switch (RG_signup_GioiTinh.getCheckedRadioButtonId()){
-                    case R.id.rd_signup_Nam:
-                        gioiTinh = "Nam"; break;
-                    case R.id.rd_signup_Nu:
-                        gioiTinh = "Nữ"; break;
-                    case R.id.rd_signup_Khac:
-                        gioiTinh = "Khác"; break;
+//                switch (RG_signup_GioiTinh.getCheckedRadioButtonId()){
+//                    case R.id.rd_signup_Nam:
+//                        gioiTinh = "Nam"; break;
+//                    case R.id.rd_signup_Nu:
+//                        gioiTinh = "Nữ"; break;
+//                    case R.id.rd_signup_Khac:
+//                        gioiTinh = "Khác"; break;
+//                }
+                if  (RG_signup_GioiTinh.getCheckedRadioButtonId() == R.id.rd_signup_Nam){
+                    gioiTinh = "Nam";
+                }else if (RG_signup_GioiTinh.getCheckedRadioButtonId() == R.id.rd_signup_Nu){
+                    gioiTinh = "Nữ";
+                }else{
+                    gioiTinh = "Khác";
                 }
                 String ngaySinh = DT_signup_NgaySinh.getDayOfMonth() + "/" + (DT_signup_NgaySinh.getMonth() + 1)
                         +"/"+DT_signup_NgaySinh.getYear();
 
                 //truyền dữ liệu vào obj nhanvienDTO
                 NhanVienDTO nhanVienDTO = new NhanVienDTO();
+                nhanVienDTO.setMANV(new Random().nextInt(1000000));
                 nhanVienDTO.setHOTENNV(hoTen);
                 nhanVienDTO.setTENDN(tenDN);
                 nhanVienDTO.setEMAIL(eMail);
@@ -77,24 +95,25 @@ public class Register2ndActivity extends AppCompatActivity {
                 nhanVienDTO.setMATKHAU(matKhau);
                 nhanVienDTO.setGIOITINH(gioiTinh);
                 nhanVienDTO.setNGAYSINH(ngaySinh);
-
-                //nếu nhân viên đầu tiên đăng ký sẽ có quyền quản lý
-                if(!nhanVienDAO.KtraTonTaiNV()){
-                    quyenDAO.ThemQuyen("Quản lý");
-                    quyenDAO.ThemQuyen("Nhân viên");
-                    nhanVienDTO.setMAQUYEN(1);
-                }else {
-                    nhanVienDTO.setMAQUYEN(2);
-                }
+                nhanVienDTO.setMAQUYEN(2);
 
                 //Thêm nv dựa theo obj nhanvienDTO
-                long ktra = nhanVienDAO.ThemNhanVien(nhanVienDTO);
-                if(ktra != 0){
-                    Toast.makeText(Register2ndActivity.this,getResources().getString(R.string.add_sucessful),Toast.LENGTH_SHORT).show();
-                    callLoginFromRegister();
-                }else{
-                    Toast.makeText(Register2ndActivity.this,getResources().getString(R.string.add_failed),Toast.LENGTH_SHORT).show();
-                }
+//                long ktra = nhanVienDAO.ThemNhanVien(nhanVienDTO);
+//                if(ktra != 0){
+//                    Toast.makeText(Register2ndActivity.this,getResources().getString(R.string.add_sucessful),Toast.LENGTH_SHORT).show();
+//                    callLoginFromRegister();
+//                }else{
+//                    Toast.makeText(Register2ndActivity.this,getResources().getString(R.string.add_failed),Toast.LENGTH_SHORT).show();
+//                }
+                Log.d("kiemtra","nhanVienDTO: " + nhanVienDTO.toString());
+                myRef1.child(nhanVienDTO.getMANV()+"").setValue(nhanVienDTO).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("kiemtra","e: " + e.toString());
+                    }
+                });
+                Toast.makeText(Register2ndActivity.this, getResources().getString(R.string.add_sucessful), Toast.LENGTH_SHORT).show();
+                callLoginFromRegister();
             }
         });
 

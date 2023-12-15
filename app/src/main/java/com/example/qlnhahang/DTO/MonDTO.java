@@ -1,10 +1,24 @@
 package com.example.qlnhahang.DTO;
 
-public class MonDTO {
+import java.io.Serializable;
+
+public class MonDTO  implements Serializable {
 
     int MaMon, MaLoai;
     String TenMon,GiaTien,TinhTrang;
-    byte[] HinhAnh;
+    String HinhAnh;
+
+    public MonDTO() {
+    }
+
+    public MonDTO(int maMon, int maLoai, String tenMon, String giaTien, String tinhTrang, String hinhAnh) {
+        MaMon = maMon;
+        MaLoai = maLoai;
+        TenMon = tenMon;
+        GiaTien = giaTien;
+        TinhTrang = tinhTrang;
+        HinhAnh = hinhAnh;
+    }
 
     public int getMaMon() {
         return MaMon;
@@ -44,11 +58,11 @@ public class MonDTO {
         TinhTrang = tinhTrang;
     }
 
-    public byte[] getHinhAnh() {
+    public String getHinhAnh() {
         return HinhAnh;
     }
 
-    public void setHinhAnh(byte[] hinhAnh) {
+    public void setHinhAnh(String hinhAnh) {
         HinhAnh = hinhAnh;
     }
 

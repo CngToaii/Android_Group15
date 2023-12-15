@@ -9,6 +9,7 @@ import com.example.qlnhahang.DTO.ThanhToanDTO;
 import com.example.qlnhahang.Database.CreateDatabase;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ThanhToanDAO {
@@ -35,7 +36,7 @@ public class ThanhToanDAO {
             thanhToanDTO.setSoLuong(cursor.getInt(cursor.getColumnIndex(CreateDatabase.TBL_CHITIETDONDAT_SOLUONG)));
             thanhToanDTO.setGiaTien(cursor.getInt(cursor.getColumnIndex(CreateDatabase.TBL_MON_GIATIEN)));
             thanhToanDTO.setTenMon(cursor.getString(cursor.getColumnIndex(CreateDatabase.TBL_MON_TENMON)));
-            thanhToanDTO.setHinhAnh(cursor.getBlob(cursor.getColumnIndex(CreateDatabase.TBL_MON_HINHANH)));
+            thanhToanDTO.setHinhAnh(Arrays.toString(cursor.getBlob(cursor.getColumnIndex(CreateDatabase.TBL_MON_HINHANH))));
             thanhToanDTOS.add(thanhToanDTO);
 
             cursor.moveToNext();
@@ -44,3 +45,4 @@ public class ThanhToanDAO {
         return thanhToanDTOS;
     }
 }
+

@@ -9,10 +9,15 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import com.example.qlnhahang.CustomAdapter.AdapterDisplayPayment;
 import com.example.qlnhahang.DAO.BanAnDAO;
 import com.example.qlnhahang.DAO.NhanVienDAO;
 import com.example.qlnhahang.DAO.ThanhToanDAO;
+import com.example.qlnhahang.DTO.BanAnDTO;
 import com.example.qlnhahang.DTO.NhanVienDTO;
 import com.example.qlnhahang.DTO.ThanhToanDTO;
 import com.example.qlnhahang.R;
@@ -32,7 +37,8 @@ public class DetailStatisticActivity extends AppCompatActivity  {
     List<ThanhToanDTO> thanhToanDTOList;
     ThanhToanDAO thanhToanDAO;
     AdapterDisplayPayment adapterDisplayPayment;
-
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference("BanAn");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +64,7 @@ public class DetailStatisticActivity extends AppCompatActivity  {
 
         //khởi tạo lớp dao mở kết nối csdl
         nhanVienDAO = new NhanVienDAO(this);
-        banAnDAO = new BanAnDAO(this);
+
         thanhToanDAO = new ThanhToanDAO(this);
 
         //chỉ hiển thị nếu lấy đc mã đơn đc chọn
@@ -69,7 +75,25 @@ public class DetailStatisticActivity extends AppCompatActivity  {
 
             NhanVienDTO nhanVienDTO = nhanVienDAO.LayNVTheoMa(manv);
             txt_detailstatistic_TenNV.setText(nhanVienDTO.getHOTENNV());
-            txt_detailstatistic_TenBan.setText(banAnDAO.LayTenBanTheoMa(maban));
+            String tenban = "";
+            myRef.addValueEventListener(new com.google.firebase.database.ValueEventListener() {
+                @Override
+                public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
+                    for (com.google.firebase.database.DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                        BanAnDTO banAnDTO = dataSnapshot1.getValue(BanAnDTO.class);
+                        if(banAnDTO.getMaBan() == maban){
+                            txt_detailstatistic_TenBan.setText(banAnDTO.getTenBan());
+                            break;
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
 
             HienThiDSCTDD();
         }

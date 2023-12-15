@@ -1,11 +1,21 @@
 package com.example.qlnhahang.DTO;
 
-public class BanAnDTO {
+import java.io.Serializable;
+
+public class BanAnDTO implements Serializable {
 
     int MaBan;
     String TenBan;
     boolean DuocChon;
 
+    public BanAnDTO() {
+    }
+
+    public BanAnDTO(int maBan, String tenBan, boolean duocChon) {
+        MaBan = maBan;
+        TenBan = tenBan;
+        DuocChon = duocChon;
+    }
 
     public int getMaBan() {
         return MaBan;

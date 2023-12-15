@@ -64,8 +64,9 @@ public class AdapterDisplayCategory extends BaseAdapter {
 
         viewHolder.txt_customcategory_TenLoai.setText(loaiMonDTO.getTenLoai());
 
-        byte[] categoryimage = loaiMonDTO.getHinhAnh();
-        Bitmap bitmap = BitmapFactory.decodeByteArray(categoryimage,0,categoryimage.length);
+        String categoryimage = loaiMonDTO.getHinhAnh();
+        byte[] categoryimagebyte = android.util.Base64.decode(categoryimage, android.util.Base64.DEFAULT);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(categoryimagebyte,0,categoryimagebyte.length);
         viewHolder.img_customcategory_HinhLoai.setImageBitmap(bitmap);
 
         return view;

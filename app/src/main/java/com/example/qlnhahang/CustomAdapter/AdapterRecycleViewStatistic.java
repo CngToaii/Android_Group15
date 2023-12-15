@@ -31,7 +31,6 @@ public class AdapterRecycleViewStatistic extends RecyclerView.Adapter<AdapterRec
         this.layout = layout;
         this.donDatDTOList = donDatDTOList;
         nhanVienDAO = new NhanVienDAO(context);
-        banAnDAO = new BanAnDAO(context);
     }
 
 
@@ -61,7 +60,7 @@ public class AdapterRecycleViewStatistic extends RecyclerView.Adapter<AdapterRec
         }
         NhanVienDTO nhanVienDTO = nhanVienDAO.LayNVTheoMa(donDatDTO.getMaNV());
         holder.txt_customstatistic_TenNV.setText(nhanVienDTO.getHOTENNV());
-        holder.txt_customstatistic_BanDat.setText(banAnDAO.LayTenBanTheoMa(donDatDTO.getMaBan()));
+//        holder.txt_customstatistic_BanDat.setText(banAnDAO.LayTenBanTheoMa(donDatDTO.getMaBan()));
     }
 
     @Override
@@ -85,3 +84,4 @@ public class AdapterRecycleViewStatistic extends RecyclerView.Adapter<AdapterRec
         }
     }
 }
+

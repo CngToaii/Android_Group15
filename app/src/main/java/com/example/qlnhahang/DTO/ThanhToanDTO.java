@@ -1,13 +1,11 @@
 package com.example.qlnhahang.DTO;
 
-import java.util.Arrays;
-
 public class ThanhToanDTO {
     String madon;
     String maMon;
     String TenMon;
     int SoLuong, GiaTien;
-    byte[] HinhAnh;
+    String HinhAnh;
 
 
     public String getMadon() {
@@ -50,23 +48,12 @@ public class ThanhToanDTO {
         GiaTien = giaTien;
     }
 
-    public byte[] getHinhAnh() {
+    public String getHinhAnh() {
         return HinhAnh;
     }
 
-    public void setHinhAnh(byte[] hinhAnh) {
+    public void setHinhAnh(String hinhAnh) {
         HinhAnh = hinhAnh;
     }
 
-    @Override
-    public String toString() {
-        return "ThanhToanDTO{" +
-                "madon='" + madon + '\'' +
-                ", maMon='" + maMon + '\'' +
-                ", TenMon='" + TenMon + '\'' +
-                ", SoLuong=" + SoLuong +
-                ", GiaTien=" + GiaTien +
-                ", HinhAnh=" + Arrays.toString(HinhAnh) +
-                '}';
-    }
 }
