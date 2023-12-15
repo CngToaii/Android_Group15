@@ -92,7 +92,7 @@ public class AddStaffActivity extends AppCompatActivity implements View.OnClickL
 
                             NhanVienDTO nhanVienDTO = dataSnapshot.getValue(NhanVienDTO.class);
                             if (nhanVienDTO.getMANV() == manv) {
-                                TXT_addstaff_title.setText("Xem thông tin nhân viên");
+                                TXT_addstaff_title.setText("Sửa nhân viên");
 
                                 //Hiển thị thông tin từ csdl
                                 TXTL_addstaff_HoVaTen.getEditText().setText(nhanVienDTO.getHOTENNV());
@@ -124,7 +124,7 @@ public class AddStaffActivity extends AppCompatActivity implements View.OnClickL
                                 int month = Integer.parseInt(items[1]) - 1;
                                 int year = Integer.parseInt(items[2]);
                                 DT_addstaff_NgaySinh.updateDate(year, month, day);
-                                BTN_addstaff_ThemNV.setText("");
+                                BTN_addstaff_ThemNV.setText("Sửa nhân viên");
                             }
                         }
                     }

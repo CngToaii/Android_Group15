@@ -116,7 +116,7 @@ public class DisplayStaffFragment extends Fragment {
 //                }
 //                break;
 //        }
-        if(id == R.id.itXem){
+        if(id == R.id.itEdit){
             Intent iEdit = new Intent(getActivity(),AddStaffActivity.class);
             iEdit.putExtra("manv",manv);
             resultLauncherAdd.launch(iEdit);

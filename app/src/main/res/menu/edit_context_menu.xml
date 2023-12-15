@@ -8,8 +8,5 @@
         android:id="@+id/itDelete"
         android:title="Xóa"
         />
-    <item
-        android:id="@+id/itXem"
-        android:title="Xem"
-        />
+
 </menu>
