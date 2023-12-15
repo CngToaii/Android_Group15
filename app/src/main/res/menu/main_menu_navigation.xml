@@ -38,11 +38,6 @@
         </item>
 
         <item
-            android:id="@+id/thongtinungdung"
-            android:icon="@drawable/ic_info_outline_black_24dp"
-            android:title="Thông Tin Ứng dụng"/>
-
-        <item
             android:id="@+id/nav_logout"
             android:title="Đăng xuất"
             android:icon="@drawable/ic_baseline_exit_to_app_24"/>

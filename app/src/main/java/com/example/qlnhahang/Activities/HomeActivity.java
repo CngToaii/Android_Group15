@@ -187,11 +187,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(getApplicationContext(), Activityprofile.class);
             startActivity(intent);
         }
-        else if(id == R.id.thongtinungdung){
-            //gọi activity ra trang welcome
-            Intent intentt = new Intent(getApplicationContext(), ThongtinActivity.class);
-            startActivity(intentt);
-        }
+
         else if(id == R.id.nav_table){
             //hiển thị tương ứng trên navigation
             FragmentTransaction tranDisplayTable = fragmentManager.beginTransaction();
