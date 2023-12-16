@@ -10,7 +10,7 @@
             android:id="@+id/img_custommenu_HinhMon"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:src="@drawable/cafe_americano"
+            android:src="@drawable/espresso"
             android:scaleType="fitXY"
             />
         <TextView

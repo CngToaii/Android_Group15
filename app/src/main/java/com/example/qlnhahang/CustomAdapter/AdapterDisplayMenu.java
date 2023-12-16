@@ -78,7 +78,7 @@ public class AdapterDisplayMenu extends BaseAdapter {
             Bitmap bitmap = BitmapFactory.decodeByteArray(menuimagebyte,0,menuimagebyte.length);
             viewholder.img_custommenu_HinhMon.setImageBitmap(bitmap);
         }else {
-            viewholder.img_custommenu_HinhMon.setImageResource(R.drawable.cafe_americano);
+            viewholder.img_custommenu_HinhMon.setImageResource(R.drawable.espresso);
         }
 
         return view;
