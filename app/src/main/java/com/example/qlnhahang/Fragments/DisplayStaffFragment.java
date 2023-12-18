@@ -55,15 +55,15 @@ public class DisplayStaffFragment extends Fragment {
                         long ktra = intent.getLongExtra("ketquaktra",0);
                         String chucnang = intent.getStringExtra("chucnang");
                         if(chucnang.equals("themnv"))
-                        {
-                            HienThiDSNV();
-                            Toast.makeText(getActivity(),"Thêm thành công",Toast.LENGTH_SHORT).show();
+                            if(chucnang.equals("themnv"))
+                            {
+                                HienThiDSNV();
+                                Toast.makeText(getActivity(),"Thêm thành công",Toast.LENGTH_SHORT).show();
 
-                        }else {
-                            HienThiDSNV();
-                            Toast.makeText(getActivity(),"Thêm thành công",Toast.LENGTH_SHORT).show();
-                        }
-
+                            }else {
+                                HienThiDSNV();
+                                Toast.makeText(getActivity(),"Thêm thành công",Toast.LENGTH_SHORT).show();
+                            }
                     }
                 }
             });
