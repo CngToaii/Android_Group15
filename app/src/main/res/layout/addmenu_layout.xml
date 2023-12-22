@@ -89,27 +89,24 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="match_parent">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txtl_addmenu_LoaiMon"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Loại món"
-                app:startIconDrawable="@drawable/ic_baseline_restaurant_menu_24"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:startIconTint="@color/black"
-                app:hintTextColor="@color/black"
                 android:textColorHint="@color/black"
-                app:boxStrokeWidthFocused="2dp"
                 app:boxStrokeColor="@color/black"
-                >
+                app:boxStrokeWidthFocused="2dp"
+                app:hintTextColor="@color/black"
+                app:startIconTint="@color/black">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="text"
-                    />
+                    android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <RelativeLayout
@@ -117,40 +114,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txtl_addmenu_LoaiMon"
-                android:layout_marginTop="10dp"
-                android:visibility="gone"
-                >
+                android:layout_marginTop="10dp">
+
                 <TextView
                     android:id="@+id/txt_addmenu_TinhTrang"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:text="Trạng thái:"
                     android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:layout_centerVertical="true"
-                    />
+                    android:textSize="18sp" />
+
                 <RadioGroup
                     android:id="@+id/rg_addmenu_TinhTrang"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:orientation="horizontal"
-                    android:layout_toRightOf="@id/txt_addmenu_TinhTrang"
                     android:layout_marginLeft="10dp"
-                    >
+                    android:layout_toRightOf="@id/txt_addmenu_TinhTrang"
+                    android:orientation="horizontal">
+
                     <RadioButton
                         android:id="@+id/rd_addmenu_ConMon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Còn món"
-                        />
+                        android:checked="true"
+                        android:text="Còn món" />
+
                     <RadioButton
                         android:id="@+id/rd_addmenu_HetMon"
-                        android:layout_marginLeft="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Hết món"
-                        />
+                        android:layout_marginLeft="10dp"
+                        android:text="Hết món" />
                 </RadioGroup>
 
             </RelativeLayout>
